@@ -3,6 +3,7 @@ package main;
 public class BankAccount {
 
     private double balance;
+    private boolean activeAccount;
 
     public BankAccount() {
         this.balance = 0;
@@ -19,4 +20,14 @@ public class BankAccount {
     public double getBalance() {
         return this.balance;
     }
+
+
+    public double withdraw(double amount) {
+        this.balance=this.balance-amount;
+        return this.balance;
+
+    }
+
+
+  
 }
