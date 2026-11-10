@@ -1,9 +1,12 @@
 package test;
 
 import main.BankAccount;
+import main.MainMenu;
 import main.Transaction;
+import main.Customer;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.fail;
 
 import java.time.LocalDate;
@@ -73,5 +76,27 @@ public class BankAccountTest {
         assertEquals(history.size(), 2);
         assertEquals("Deposit", history.get(0).getType());
         assertEquals("Deposit", history.get(1).getType());
+    }
+
+    @Test 
+    public void testAdditionalAccountCreation() {
+        Customer customer = new Customer(); //starts with one bank account
+        assertEquals(1, customer.getAccounts().size());
+
+        customer.openAccount();
+
+        assertEquals(2, customer.getAccounts().size());
+    }
+
+    @Test
+    public void testAdditionalAccountID() {
+        Customer customer = new Customer(); //starts with account ID 0
+        customer.openAccount();
+        customer.openAccount();
+
+        //IDs are assigned in order of creation
+        assertEquals(0, customer.getAccounts().get(0).getAccountId());
+        assertEquals(1, customer.getAccounts().get(1).getAccountId());
+        assertEquals(2, customer.getAccounts().get(2).getAccountId());
     }
 }
