@@ -55,4 +55,13 @@ public class BankAccountTest {
         }
 
       }
+
+
+      @Test
+    public void testCurentBalance(){
+        BankAccount testAccount= new BankAccount();
+        testAccount.deposit(50);
+       assertEquals(50,testAccount.getBalance(),0);
+
+      }
 }
