@@ -48,6 +48,18 @@ public class MainMenu {
         userAccount.deposit(depositAmount);
     }
 
+    public void performWithdraw(){
+        double withdrawAmount= -1;
+        while (withdrawAmount<0){
+            System.out.print("How much would you like to withdraw:");
+            withdrawAmount= keyboardInput.nextInt();
+
+        }
+
+        userAccount.withdraw(withdrawAmount);
+
+    }
+
     public void run() {
         int selection = -1;
         while(selection != EXIT_SELECTION) {

@@ -22,10 +22,12 @@ public class BankAccount {
     }
 
 
-    public double withdraw(double amount) {
-        this.balance=this.balance-amount;
-        return this.balance;
-
+    public void withdraw(double amount) {
+        if(amount > 0) {
+            this.balance -= amount;
+        } else {
+            throw new IllegalArgumentException();
+        }
     }
 
 
