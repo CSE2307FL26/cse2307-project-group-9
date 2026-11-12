@@ -16,8 +16,6 @@ public class BankAccountTest {
         assertEquals(50, testAccount.getBalance(), 0.01);
     }
 
-
-
     @Test
     public void testInvalidDeposit() {
         BankAccount testAccount = new BankAccount();
@@ -29,7 +27,7 @@ public class BankAccountTest {
         }
     }
 
-      @Test
+    @Test
     public void testWithdraw(){
         BankAccount testAccount= new BankAccount();
         testAccount.deposit(50);
@@ -38,11 +36,19 @@ public class BankAccountTest {
 
       }
 
-      public void testInvalidWithdraw(){
+    @Test
+    public void testInvalidWithdraw(){
         BankAccount testAccount= new BankAccount();
         testAccount.deposit(50);
         try{
             testAccount.withdraw(60);
+            fail();
+        }catch(IllegalArgumentException e){
+            // do nothing, test passes
+        }
+
+         try{
+            testAccount.withdraw(-1);
             fail();
         }catch(IllegalArgumentException e){
             // do nothing, test passes
