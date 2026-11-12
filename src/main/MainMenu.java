@@ -85,6 +85,24 @@ public class MainMenu {
 
     public void makeAdditionalBankAccount() {
         customer.openAccount();
+        System.out.println("Made a new account with ID " + customer.getAccounts().get(customer.getSize()-1).getAccountId());
+    }
+
+    public void switchBankAccounts() {
+        System.out.println("You are currently in bank account " + currentAccount.getAccountId());
+        System.out.println("Which bank account would you like to switch to?");
+        for (BankAccount a : customer.getAccounts()) {
+            System.out.print("Account: " + a.getAccountId() + "   ");
+        } 
+        System.out.println();
+        int selection = -1;
+        
+        while (selection < 0 || selection >= customer.getAccounts().size()) {
+            System.out.print("Enter account ID: ");
+            selection = keyboardInput.nextInt();
+        } 
+        currentAccount = customer.getAccounts().get(selection);
+        System.out.println("Switched to account " + currentAccount.getAccountId());
     }
 
     public void run() {
