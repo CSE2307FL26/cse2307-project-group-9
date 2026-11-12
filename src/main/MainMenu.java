@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 public class MainMenu {
 
-    private static final int EXIT_SELECTION = 3;
-	private static final int MAX_SELECTION = 3;
+    private static final int EXIT_SELECTION = 4;
+	private static final int MAX_SELECTION = 4;
 
 	private BankAccount userAccount;
     private Scanner keyboardInput;
@@ -20,7 +20,8 @@ public class MainMenu {
         
         System.out.println("1. Make a deposit");
         System.out.println("2. Make a withdrawal");
-        System.out.println("3. Exit the app");
+        System.out.println("3. Check your balance");
+        System.out.println("4. Exit the app");
        
 
     }
@@ -42,6 +43,9 @@ public class MainMenu {
             case 2: 
                 performWithdraw();
                 break;
+            case 3: 
+                currentBalance();
+                break;
         }
     }
 
@@ -54,18 +58,22 @@ public class MainMenu {
         userAccount.deposit(depositAmount);
     }
 
-    public void performWithdraw(){
-        double withdrawAmount= -1;
-        while (withdrawAmount<0){
-            System.out.print("How much would you like to withdraw:");
-            withdrawAmount= keyboardInput.nextDouble();
-
-        }
-
-        userAccount.withdraw(withdrawAmount);
-
+    public void performWithdraw() {
+    double withdrawAmount = -1;
+    while (withdrawAmount < 0) {
+        System.out.print("How much would you like to withdraw? ");
+        withdrawAmount = keyboardInput.nextDouble();
     }
 
+    try {
+        userAccount.withdraw(withdrawAmount);
+        System.out.println("Withdrawal successful.");
+    } catch (IllegalArgumentException e) {
+        System.out.println("Error: " + e.getMessage());
+    }
+}
+
+   
 
 
     public void run() {
