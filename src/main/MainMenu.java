@@ -7,14 +7,16 @@ import java.util.Scanner;
 public class MainMenu {
 
     private static final int EXIT_SELECTION = 2;
-	private static final int MAX_SELECTION = 3;
+	private static final int MAX_SELECTION = 5;
 
-	private BankAccount userAccount;
+	private BankAccount currentAccount;
+    private Customer customer;
     private Scanner keyboardInput;
 
     public MainMenu() {
-        this.userAccount = new BankAccount();
+        this.customer = new Customer();
         this.keyboardInput = new Scanner(System.in);
+        this.currentAccount = customer.getAccounts().get(0);
     }
 
     public void displayOptions() {
@@ -23,6 +25,8 @@ public class MainMenu {
         System.out.println("1. Make a deposit");
         System.out.println("2. Exit the app");
         System.out.println("3. See Transaction History");
+        System.out.println("4. Make an additional bank account");
+        System.out.println("5. Switch Bank Accounts");
 
     }
 
@@ -43,6 +47,12 @@ public class MainMenu {
             case 3: 
                 showTransactionHistory();
                 break;
+            case 4:
+                makeAdditionalBankAccount();
+                break;
+            case 5:
+                switchBankAccounts();
+                break;
         }
     }
 
@@ -52,11 +62,11 @@ public class MainMenu {
             System.out.print("How much would you like to deposit: ");
             depositAmount = keyboardInput.nextDouble();
         }
-        userAccount.deposit(depositAmount);
+        currentAccount.deposit(depositAmount);
     }
 
     public void showTransactionHistory() {
-        List<Transaction> history = userAccount.getTransactionHistory();
+        List<Transaction> history = currentAccount.getTransactionHistory();
 
         if (history.size() == 0) {
             System.out.println("No transaction history");
@@ -71,6 +81,28 @@ public class MainMenu {
             }
             System.out.println(t.getDate() + " | " + t.getType() + " | " + symbol + t.getAmount());
         }
+    }
+
+    public void makeAdditionalBankAccount() {
+        customer.openAccount();
+        System.out.println("Made a new account with ID " + customer.getAccounts().get(customer.getSize()-1).getAccountId());
+    }
+
+    public void switchBankAccounts() {
+        System.out.println("You are currently in bank account " + currentAccount.getAccountId());
+        System.out.println("Which bank account would you like to switch to?");
+        for (BankAccount a : customer.getAccounts()) {
+            System.out.print("Account: " + a.getAccountId() + "   ");
+        } 
+        System.out.println();
+        int selection = -1;
+        
+        while (selection < 0 || selection >= customer.getAccounts().size()) {
+            System.out.print("Enter account ID: ");
+            selection = keyboardInput.nextInt();
+        } 
+        currentAccount = customer.getAccounts().get(selection);
+        System.out.println("Switched to account " + currentAccount.getAccountId());
     }
 
     public void run() {

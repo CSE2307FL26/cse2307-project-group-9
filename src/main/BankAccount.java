@@ -8,10 +8,12 @@ public class BankAccount {
 
     private double balance;
     private List<Transaction> transactions;
+    private int ID;
 
-    public BankAccount() {
+    public BankAccount(int accountID) {
         this.balance = 0;
         transactions = new ArrayList<>();
+        this.ID = accountID;
     }
 
     public void deposit(double amount) {
@@ -30,6 +32,10 @@ public class BankAccount {
 
     public List<Transaction> getTransactionHistory() {
         return transactions;
+    }
+
+    public int getAccountId() {
+        return ID;
     }
  
 }
