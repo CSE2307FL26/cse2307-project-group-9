@@ -31,7 +31,7 @@ Micaiah - 10
 N/A
 
 ## What commands are needed to compile and run your code from the command line?
-From cse2307-project-group-9\src> javac main\BankAccount.java main\Transaction.java main\MainMenu.java main\Account.java main\BankService.java
-                                >java main.MainMenu   
+From cse2307-project-group-9\src> javac main\BankAccount.java main\Transaction.java main\MainMenu.java main\Account.java main\BankService.java  
+                                >java main.MainMenu     
 chmod +x runapp.sh
 ./runapp.sh
