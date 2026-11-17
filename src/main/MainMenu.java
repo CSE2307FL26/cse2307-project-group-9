@@ -25,8 +25,10 @@ public class MainMenu {
         System.out.println("1. Make a deposit");
         System.out.println("2. Exit the app");
         System.out.println("3. See Transaction History");
-        System.out.println("4. Make an additional bank account");
-        System.out.println("5. Switch Bank Accounts");
+        System.out.println("4. Make a withdrawal");
+        System.out.println("5. Check current balance")
+        System.out.println("6. Make an additional bank account");
+        System.out.println("7. Switch Bank Accounts");
 
     }
 
@@ -47,10 +49,18 @@ public class MainMenu {
             case 3: 
                 showTransactionHistory();
                 break;
-            case 4:
+            case 4: 
+                performWithdraw();
+                break;
+            
+            case 5: 
+                currentBalance();
+                break;
+            
+            case 6:
                 makeAdditionalBankAccount();
                 break;
-            case 5:
+            case 7:
                 switchBankAccounts();
                 break;
         }
@@ -82,6 +92,14 @@ public class MainMenu {
             System.out.println(t.getDate() + " | " + t.getType() + " | " + symbol + t.getAmount());
         }
     }
+
+     public void currentBalance() {
+
+        double balance = currentAccount.getBalance();
+        System.out.print("Your current balance is " + balance);
+
+    }
+
 
     public void makeAdditionalBankAccount() {
         customer.openAccount();

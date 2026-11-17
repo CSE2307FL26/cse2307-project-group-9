@@ -130,4 +130,15 @@ public class BankAccountTest {
         assertEquals(1, customer.getAccounts().get(1).getAccountId());
         assertEquals(2, customer.getAccounts().get(2).getAccountId());
     }
+
+
+    @Test
+    public void testCurentBalance(){
+        BankAccount testAccount= new BankAccount(0);
+        testAccount.deposit(50);
+       assertEquals(50,testAccount.getBalance(),0);
+
+      }
+
+
 }
