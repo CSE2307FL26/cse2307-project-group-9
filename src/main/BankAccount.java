@@ -1,16 +1,26 @@
 package main;
 
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class BankAccount {
 
     private double balance;
+    private List<Transaction> transactions;
+    private int ID;
 
-    public BankAccount() {
+    public BankAccount(int accountID) {
         this.balance = 0;
+        transactions = new ArrayList<>();
+        this.ID = accountID;
     }
 
     public void deposit(double amount) {
         if(amount > 0) {
             this.balance += amount;
+            Transaction transaction = new Transaction("Deposit", amount);
+            transactions.add(transaction);
         } else {
             throw new IllegalArgumentException();
         }
@@ -19,4 +29,25 @@ public class BankAccount {
     public double getBalance() {
         return this.balance;
     }
+
+    public void withdraw(double amount) {
+    if (amount < 0) {
+        throw new IllegalArgumentException("amount cannot be negative.");
+    }
+    if (amount > this.balance) {
+        throw new IllegalArgumentException("Insufficient funds.");
+    }
+    this.balance -= amount;
+}
+
+
+
+    public List<Transaction> getTransactionHistory() {
+        return transactions;
+    }
+
+    public int getAccountId() {
+        return ID;
+    }
+ 
 }
