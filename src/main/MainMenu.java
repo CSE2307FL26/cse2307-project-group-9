@@ -41,11 +41,12 @@ public class MainMenu {
 
         System.out.println("1. Make a deposit");
         System.out.println("2. Exit the app");
-        System.out.println("3. Close account");
-        System.out.println("4. See Transaction History");
+        System.out.println("3. See Transaction History");
+
+        System.out.println("4. Make a withdrawal");
         System.out.println("5. Make an additional bank account");
-        System.out.println("6. Transfer money");
-        System.out.println("7. Switch Bank Accounts");
+        System.out.println("6. Switch Bank Accounts");
+
     }
 
     public int getUserSelection(int max) {
@@ -72,10 +73,14 @@ public class MainMenu {
             case 4: 
                 showTransactionHistory();
                 break;
+
+            case 4:
+                performWithdraw();
+                break;
             case 5:
                 makeAdditionalBankAccount();
                 break;
-            case 7:
+            case 6:
                 switchBankAccounts();
                 break;
             case 6:
@@ -233,6 +238,27 @@ public class MainMenu {
         }
     }
 
+
+
+
+    public void performWithdraw() {
+    double withdrawAmount = -1;
+    while (withdrawAmount < 0) {
+        System.out.print("How much would you like to withdraw? ");
+        withdrawAmount = keyboardInput.nextDouble();
+    }
+
+    try {
+        currentAccount.withdraw(withdrawAmount);
+        System.out.println("Withdrawal successful.");
+    } catch (IllegalArgumentException e) {
+        System.out.println("Error: " + e.getMessage());
+    }
+}
+
+   
+
+
     public void run() {
 
         int selection = -1;
@@ -254,4 +280,6 @@ public class MainMenu {
         bankApp.run();
     }
 }
+
+
 
