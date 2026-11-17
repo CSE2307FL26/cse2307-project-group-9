@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 public class Customer {
 
-    private int ID;
     private List<BankAccount> accounts;
     
     public Customer() {
@@ -13,7 +12,6 @@ public class Customer {
         BankAccount userAccount = new BankAccount(0); 
         accounts = new ArrayList<BankAccount>();
         accounts.add(userAccount);
-        this.ID = 0;
     }
 
     public List<BankAccount> getAccounts() {

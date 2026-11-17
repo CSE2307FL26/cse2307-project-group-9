@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class MainMenu {
 
     private static final int EXIT_SELECTION = 2;
-	private static final int MAX_SELECTION = 7;
+	private static final int MAX_SELECTION = 9;
 
     private BankAccount currentAccount;
     private Customer customer;
@@ -149,6 +149,12 @@ public class MainMenu {
 
     // Transfer functionality
     public void performTransfer() {
+        System.out.println("You are currently in bank account " + currentAccount.getAccountId());
+        System.out.println("Which bank account would you like to transfer to?");
+        for (BankAccount a : customer.getAccounts()) {
+            System.out.print("Account: " + a.getAccountId() + "   ");
+        } 
+        System.out.println();
         int selection = -1;
         
         while (selection < 0 || selection >= customer.getAccounts().size()) {
@@ -173,10 +179,10 @@ public class MainMenu {
 
             System.out.println("Transfer successful!");
 
-            System.out.println("Your new balance: $"
+            System.out.println("Account " + currentAccount.getAccountId() + " new balance: $"
                     + currentAccount.getBalance());
 
-            System.out.println("Recipient's new balance: $"
+            System.out.println("Account " + receiver.getAccountId() + " new balance: $"
                     + receiver.getBalance());
 
         } catch (IllegalArgumentException e) {
@@ -187,14 +193,14 @@ public class MainMenu {
 
     // Close account functionality
     public void performCloseAccount() {
-
-        if (currentAccount == null) {
-            System.out.println("Your account is already closed.");
+        System.out.println("You are currently in bank account " + currentAccount.getAccountId());
+        if (customer.getSize() == 0) {
+            System.out.println("No more accounts to close.");
             return;
         }
 
         System.out.print(
-            "Are you sure you want to close your account? (yes/no): "
+            "Are you sure you want to close account " + currentAccount.getAccountId() + "? (yes/no): "
         );
 
         String confirmation = keyboardInput.next();

@@ -38,6 +38,8 @@ public class BankAccount {
         throw new IllegalArgumentException("Insufficient funds.");
     }
     this.balance -= amount;
+    Transaction transaction = new Transaction("Withdrawal", amount);
+    transactions.add(transaction);
 }
 
 
