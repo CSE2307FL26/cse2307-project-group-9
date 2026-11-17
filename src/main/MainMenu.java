@@ -25,11 +25,19 @@ public class MainMenu {
 
         System.out.println("1. Make a deposit");
         System.out.println("2. Exit the app");
-        System.out.println("3. Close account");
-        System.out.println("4. See Transaction History");
-        System.out.println("5. Make an additional bank account");
-        System.out.println("6. Transfer money");
+        System.out.println("3. See Transaction History");
+<<<<<<< HEAD
+        System.out.println("4. Make a withdrawal");
+        System.out.println("5. Check current balance")
+        System.out.println("6. Make an additional bank account");
         System.out.println("7. Switch Bank Accounts");
+=======
+
+        System.out.println("4. Make a withdrawal");
+        System.out.println("5. Make an additional bank account");
+        System.out.println("6. Switch Bank Accounts");
+>>>>>>> 69dc53da1df97acba94ffbf8b08640fcf31fcaa7
+
     }
 
     public int getUserSelection(int max) {
@@ -56,10 +64,29 @@ public class MainMenu {
             case 4: 
                 showTransactionHistory();
                 break;
-            case 5:
+<<<<<<< HEAD
+            case 4: 
+                performWithdraw();
+                break;
+            
+            case 5: 
+                currentBalance();
+                break;
+            
+            case 6:
                 makeAdditionalBankAccount();
                 break;
             case 7:
+=======
+
+            case 4:
+                performWithdraw();
+                break;
+            case 5:
+                makeAdditionalBankAccount();
+                break;
+            case 6:
+>>>>>>> 69dc53da1df97acba94ffbf8b08640fcf31fcaa7
                 switchBankAccounts();
                 break;
             case 6:
@@ -107,6 +134,14 @@ public class MainMenu {
             System.out.println(t.getDate() + " | " + t.getType() + " | " + symbol + t.getAmount());
         }
     }
+
+     public void currentBalance() {
+
+        double balance = currentAccount.getBalance();
+        System.out.print("Your current balance is " + balance);
+
+    }
+
 
     public void makeAdditionalBankAccount() {
         customer.openAccount();
@@ -206,6 +241,27 @@ public class MainMenu {
         }
     }
 
+
+
+
+    public void performWithdraw() {
+    double withdrawAmount = -1;
+    while (withdrawAmount < 0) {
+        System.out.print("How much would you like to withdraw? ");
+        withdrawAmount = keyboardInput.nextDouble();
+    }
+
+    try {
+        currentAccount.withdraw(withdrawAmount);
+        System.out.println("Withdrawal successful.");
+    } catch (IllegalArgumentException e) {
+        System.out.println("Error: " + e.getMessage());
+    }
+}
+
+   
+
+
     public void run() {
 
         int selection = -1;
@@ -227,4 +283,6 @@ public class MainMenu {
         bankApp.run();
     }
 }
+
+
 
