@@ -30,6 +30,18 @@ public class BankAccount {
         return this.balance;
     }
 
+    public void withdraw(double amount) {
+    if (amount < 0) {
+        throw new IllegalArgumentException("amount cannot be negative.");
+    }
+    if (amount > this.balance) {
+        throw new IllegalArgumentException("Insufficient funds.");
+    }
+    this.balance -= amount;
+}
+
+
+
     public List<Transaction> getTransactionHistory() {
         return transactions;
     }

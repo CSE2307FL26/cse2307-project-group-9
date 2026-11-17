@@ -105,6 +105,27 @@ public class MainMenu {
         System.out.println("Switched to account " + currentAccount.getAccountId());
     }
 
+
+
+
+    public void performWithdraw() {
+    double withdrawAmount = -1;
+    while (withdrawAmount < 0) {
+        System.out.print("How much would you like to withdraw? ");
+        withdrawAmount = keyboardInput.nextDouble();
+    }
+
+    try {
+        currentAccount.withdraw(withdrawAmount);
+        System.out.println("Withdrawal successful.");
+    } catch (IllegalArgumentException e) {
+        System.out.println("Error: " + e.getMessage());
+    }
+}
+
+   
+
+
     public void run() {
         int selection = -1;
         while(selection != EXIT_SELECTION) {
@@ -120,3 +141,6 @@ public class MainMenu {
     }
 
 }
+
+
+
