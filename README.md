@@ -32,6 +32,6 @@ N/A
 
 ## What commands are needed to compile and run your code from the command line?
 From cse2307-project-group-9>   
-> javac -d bin src/main/*.java  
-> java -cp bin main.MainMenu  
+\> javac -d bin src/main/*.java  
+\> java -cp bin main.MainMenu  
 
