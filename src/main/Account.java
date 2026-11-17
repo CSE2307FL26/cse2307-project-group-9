@@ -1,4 +1,4 @@
-package main.BankingApp;
+package main;
 
 
 public class Account {

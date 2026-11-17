@@ -2,9 +2,8 @@ package test;
 
 import org.junit.Test;
 
-
-import main.BankingApp.Account;
-import main.BankingApp.BankService;
+import main.Account;
+import main.BankService;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;

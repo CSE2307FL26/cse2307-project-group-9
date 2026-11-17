@@ -2,33 +2,17 @@ package main;
 
 import java.util.List;
 import java.util.Scanner;
-import main.BankingApp.Account;
-import main.BankingApp.BankService;
 
 public class MainMenu {
 
     private static final int EXIT_SELECTION = 2;
 	private static final int MAX_SELECTION = 7;
 
-    private BankService bankService;
-    private Account userAccount;
     private BankAccount currentAccount;
     private Customer customer;
     private Scanner keyboardInput;
 
     public MainMenu() {
-
-        this.bankService = new BankService();
-
-        // Create the customer's account
-        this.userAccount = new Account(12345, 500.00);
-
-        // Create a second account for transfer testing
-        Account recipientAccount = new Account(67890, 250.00);
-
-        // Register both accounts with the bank
-        bankService.addAccount(userAccount);
-        bankService.addAccount(recipientAccount);
 
         this.customer = new Customer();
         this.keyboardInput = new Scanner(System.in);
@@ -93,11 +77,6 @@ public class MainMenu {
     // Deposit functionality
     public void performDeposit() {
 
-        if (bankService.getAccount(userAccount.getAccountNumber()) == null) {
-            System.out.println("Your account is closed.");
-            return;
-        }
-
         double depositAmount = -1;
 
         while (depositAmount <= 0) {
@@ -154,21 +133,15 @@ public class MainMenu {
 
     // Transfer functionality
     public void performTransfer() {
+        int selection = -1;
+        
+        while (selection < 0 || selection >= customer.getAccounts().size()) {
+            System.out.print("Enter account ID for account you want to transfer money to: ");
+            selection = keyboardInput.nextInt();
+        } 
+        BankAccount receiver = customer.getAccounts().get(selection);
 
-        // Check whether the customer's account is still open
-        if (bankService.getAccount(userAccount.getAccountNumber()) == null) {
-            System.out.println("Your account is closed.");
-            return;
-        }
-
-        System.out.print("Enter the recipient's account number: ");
-
-        int recipientNumber = keyboardInput.nextInt();
-
-        // Find the recipient's account
-        Account receiver = bankService.getAccount(recipientNumber);
-
-        if (receiver == null) {
+        if (currentAccount == null) {
             System.out.println("Recipient account does not exist.");
             return;
         }
@@ -180,12 +153,12 @@ public class MainMenu {
         try {
 
             // Call the transfer method in BankService
-            bankService.transfer(userAccount, receiver, amount);
+            customer.transfer(currentAccount, receiver, amount);
 
             System.out.println("Transfer successful!");
 
             System.out.println("Your new balance: $"
-                    + userAccount.getBalance());
+                    + currentAccount.getBalance());
 
             System.out.println("Recipient's new balance: $"
                     + receiver.getBalance());
@@ -199,7 +172,7 @@ public class MainMenu {
     // Close account functionality
     public void performCloseAccount() {
 
-        if (bankService.getAccount(userAccount.getAccountNumber()) == null) {
+        if (currentAccount == null) {
             System.out.println("Your account is already closed.");
             return;
         }
@@ -212,8 +185,8 @@ public class MainMenu {
 
         if (confirmation.equalsIgnoreCase("yes")) {
 
-            boolean result = bankService.closeAccount(
-                    userAccount.getAccountNumber()
+            boolean result = customer.closeAccount(
+                    currentAccount.getAccountId()
             );
 
             if (result) {

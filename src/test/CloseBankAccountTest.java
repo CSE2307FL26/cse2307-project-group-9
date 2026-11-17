@@ -2,8 +2,10 @@ package test;
 
 import org.junit.Test;
 
-import main.BankingApp.Account;
-import main.BankingApp.BankService;
+import main.BankAccount;
+import main.MainMenu;
+import main.Transaction;
+import main.Customer;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,16 +15,14 @@ public class CloseBankAccountTest {
     @Test 
     public void testCloseExistingAccount() {
 
-        BankService bankService = new BankService();
-        Account account = new Account(12345, 500.00);
+        Customer bankService = new Customer(); //opens accountNumber 0
 
-        bankService.addAccount(account);
+        bankService.openAccount(); //opens accountNumber 1
 
-        boolean result = bankService.closeAccount(12345);
+        boolean result = bankService.closeAccount(1);
 
         assertTrue(result, "The account has closed successfully");
-        assertNull(bankService.getAccount(12345), "The account should no longer exist");
-
+        assertNull(bankService.getAccounts().get(1), "The account should no longer exist");
     }
 
 }
