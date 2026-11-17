@@ -25,8 +25,10 @@ public class MainMenu {
         System.out.println("1. Make a deposit");
         System.out.println("2. Exit the app");
         System.out.println("3. See Transaction History");
-        System.out.println("4. Make an additional bank account");
-        System.out.println("5. Switch Bank Accounts");
+
+        System.out.println("4. Make a withdrawal");
+        System.out.println("5. Make an additional bank account");
+        System.out.println("6. Switch Bank Accounts");
 
     }
 
@@ -47,10 +49,14 @@ public class MainMenu {
             case 3: 
                 showTransactionHistory();
                 break;
+
             case 4:
-                makeAdditionalBankAccount();
+                performWithdraw();
                 break;
             case 5:
+                makeAdditionalBankAccount();
+                break;
+            case 6:
                 switchBankAccounts();
                 break;
         }
