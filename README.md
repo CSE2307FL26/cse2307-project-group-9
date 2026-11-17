@@ -4,7 +4,7 @@
 
 Anna Zhang
 Imaan Ali
-Micaiah Finnerson
+Micaiah Finerson
 
 ## User stories
 
