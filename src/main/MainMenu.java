@@ -26,18 +26,12 @@ public class MainMenu {
         System.out.println("1. Make a deposit");
         System.out.println("2. Exit the app");
         System.out.println("3. See Transaction History");
-<<<<<<< HEAD
         System.out.println("4. Make a withdrawal");
-        System.out.println("5. Check current balance")
+        System.out.println("5. Check current balance");
         System.out.println("6. Make an additional bank account");
         System.out.println("7. Switch Bank Accounts");
-=======
-
-        System.out.println("4. Make a withdrawal");
-        System.out.println("5. Make an additional bank account");
-        System.out.println("6. Switch Bank Accounts");
->>>>>>> 69dc53da1df97acba94ffbf8b08640fcf31fcaa7
-
+        System.out.println("8. Close account");
+        System.out.println("9. Transfer money");
     }
 
     public int getUserSelection(int max) {
@@ -61,42 +55,29 @@ public class MainMenu {
             case 1:
                 performDeposit();
                 break;
-            case 4: 
+            case 2:
+                System.out.println("Thank you for using 237 Bank!");
+                break;
+            case 3: 
                 showTransactionHistory();
                 break;
-<<<<<<< HEAD
             case 4: 
                 performWithdraw();
                 break;
-            
             case 5: 
                 currentBalance();
                 break;
-            
             case 6:
                 makeAdditionalBankAccount();
                 break;
             case 7:
-=======
-
-            case 4:
-                performWithdraw();
-                break;
-            case 5:
-                makeAdditionalBankAccount();
-                break;
-            case 6:
->>>>>>> 69dc53da1df97acba94ffbf8b08640fcf31fcaa7
                 switchBankAccounts();
                 break;
-            case 6:
-                performTransfer();
-                break;
-            case 3:
+            case 8:
                 performCloseAccount();
                 break;
-            case 2:
-                System.out.println("Thank you for using 237 Bank!");
+            case 9:
+                performTransfer();
                 break;
         }
     }

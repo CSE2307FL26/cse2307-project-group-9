@@ -2,53 +2,55 @@ package test;
 
 import org.junit.Test;
 
-import main.Account;
-import main.BankService;
+import main.BankAccount;
+import main.Customer;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
 
 public class TransferMoneyTest {
-    @Test 
+
+    @Test
     public void testTransferMoneyBetweenAccounts() {
 
-        Account account1 = new Account(1, 1000.00);
-        Account account2 = new Account(2, 500.00);
+        Customer bank = new Customer();
+        BankAccount account1 = bank.getAccounts().get(0); //ID: 0
+        BankAccount account2 = bank.openAccount();        //ID: 1
+        account1.deposit(10);
+        account2.deposit(10);
 
-        BankService bank = new BankService();
+        bank.transfer(account1, account2, 5);
 
-        bank.transfer(account1, account2, 200.00);
-
-        assertEquals(800.00, account1.getBalance(), 0.001);
-        assertEquals(700.00, account2.getBalance(), 0.001);
-
+        assertEquals(5.00, account1.getBalance(), 0.001);
+        assertEquals(15.00, account2.getBalance(), 0.001);
     }
 
-
-    @Test 
+    @Test
     public void testTransferWithInsufficientFunds() {
 
-        Account account1 = new Account(1, 100.00);
-        Account account2 = new Account(2, 500.00);
+        Customer bank = new Customer();
+        BankAccount account1 = bank.getAccounts().get(0);
+        BankAccount account2 = bank.openAccount();
+        account1.deposit(100.00);
+        account2.deposit(500.00);
 
-        BankService bank = new BankService();
-
-        assertThrows(IllegalArgumentException.class, () ->  { 
+        assertThrows(IllegalArgumentException.class, () -> {
             bank.transfer(account1, account2, 200.00);
-    });
+        });
 
         assertEquals(100.00, account1.getBalance(), 0.001);
         assertEquals(500.00, account2.getBalance(), 0.001);
     }
 
-    @Test 
+    @Test
     public void testNegativeTransfer() {
-        
-        Account account1 = new Account(1, 1000.00);
-        Account account2 = new Account(2, 500.00);
 
-        BankService bank = new BankService();
+        Customer bank = new Customer();
+        BankAccount account1 = bank.getAccounts().get(0);
+        BankAccount account2 = bank.openAccount();
+        account1.deposit(1000.00);
+        account2.deposit(500.00);
 
         assertThrows(IllegalArgumentException.class, () -> {
             bank.transfer(account1, account2, -100.00);
@@ -56,16 +58,16 @@ public class TransferMoneyTest {
 
         assertEquals(1000.00, account1.getBalance(), 0.001);
         assertEquals(500.00, account2.getBalance(), 0.001);
-    
     }
 
-    @Test 
+    @Test
     public void testZeroDollarTransfer() {
 
-        Account account1 = new Account(1, 1000.00);
-        Account account2 = new Account(2, 500.00);
-
-        BankService bank = new BankService();
+        Customer bank = new Customer();
+        BankAccount account1 = bank.getAccounts().get(0);
+        BankAccount account2 = bank.openAccount();
+        account1.deposit(1000.00);
+        account2.deposit(500.00);
 
         assertThrows(IllegalArgumentException.class, () -> {
             bank.transfer(account1, account2, 0.00);
@@ -73,15 +75,14 @@ public class TransferMoneyTest {
 
         assertEquals(1000.00, account1.getBalance(), 0.001);
         assertEquals(500.00, account2.getBalance(), 0.001);
-
     }
 
-    @Test 
+    @Test
     public void testTransferToSameAccount() {
 
-        Account account1 = new Account(1, 1000.00);
-
-        BankService bank = new BankService();
+        Customer bank = new Customer();
+        BankAccount account1 = bank.getAccounts().get(0);
+        account1.deposit(1000.00);
 
         assertThrows(IllegalArgumentException.class, () -> {
             bank.transfer(account1, account1, 200.00);
@@ -90,4 +91,3 @@ public class TransferMoneyTest {
         assertEquals(1000.00, account1.getBalance(), 0.001);
     }
 }
-

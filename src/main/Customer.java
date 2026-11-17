@@ -66,7 +66,7 @@ public class Customer {
 
         //Complete transfer
         //uncomment sender.withdraw(amount) when withdraw is implemented
-       // sender.withdraw(amount);
+        sender.withdraw(amount);
         receiver.deposit(amount);
     }
 }
