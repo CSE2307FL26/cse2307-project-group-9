@@ -6,12 +6,14 @@ import java.util.ArrayList;
 public class Customer {
 
     private List<BankAccount> accounts;
+    private int size;
     
     public Customer() {
         //First accounts ID starts at 0
         BankAccount userAccount = new BankAccount(0); 
         accounts = new ArrayList<BankAccount>();
         accounts.add(userAccount);
+        this.size = 1;
     }
 
     public List<BankAccount> getAccounts() {
@@ -23,11 +25,12 @@ public class Customer {
     public BankAccount openAccount() {
         BankAccount newAccount = new BankAccount(accounts.size());
         accounts.add(newAccount);
+        size++;
         return newAccount;
     }
 
     public int getSize() {
-        return accounts.size();
+        return size;
     }
 
     public boolean closeAccount(int accountNumber) {
@@ -40,9 +43,11 @@ public class Customer {
             return false;
         }
 
-        //Remove the account from the bank
-        accounts.remove(accountNumber);
-        
+        //Remove the account from the bank by setting its status as false
+        accounts.get(accountNumber).setBankStatus(false);
+        accounts.get(accountNumber).setBankAmount(0);
+        size--;
+
         return true;
     }   
 

@@ -1,12 +1,13 @@
 package main;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class MainMenu {
 
     private static final int EXIT_SELECTION = 2;
-	private static final int MAX_SELECTION = 9;
+	private static final int MAX_SELECTION = 10;
 
     private BankAccount currentAccount;
     private Customer customer;
@@ -32,6 +33,7 @@ public class MainMenu {
         System.out.println("7. Switch Bank Accounts");
         System.out.println("8. Close account");
         System.out.println("9. Transfer money");
+        System.out.println("10. View complete bank history");
     }
 
     public int getUserSelection(int max) {
@@ -79,6 +81,9 @@ public class MainMenu {
             case 9:
                 performTransfer();
                 break;
+            case 10:
+                showCompleteBankingHistory();
+                break;
         }
     }
 
@@ -102,6 +107,7 @@ public class MainMenu {
 
         if (history.size() == 0) {
             System.out.println("No transaction history");
+            return;
         }
 
 
@@ -133,14 +139,20 @@ public class MainMenu {
         System.out.println("You are currently in bank account " + currentAccount.getAccountId());
         System.out.println("Which bank account would you like to switch to?");
         for (BankAccount a : customer.getAccounts()) {
-            System.out.print("Account: " + a.getAccountId() + "   ");
+            if (a.getStatus()) {
+                System.out.print("Account: " + a.getAccountId() + "   ");
+            }
         } 
         System.out.println();
         int selection = -1;
         
         while (selection < 0 || selection >= customer.getAccounts().size()) {
-            System.out.print("Enter account ID: ");
             selection = keyboardInput.nextInt();
+            while (!customer.getAccounts().get(selection).getStatus()) {
+                System.out.print("Enter account ID: ");
+                selection = keyboardInput.nextInt();
+            }
+            
         } 
         currentAccount = customer.getAccounts().get(selection);
         System.out.println("Switched to account " + currentAccount.getAccountId());
@@ -152,14 +164,19 @@ public class MainMenu {
         System.out.println("You are currently in bank account " + currentAccount.getAccountId());
         System.out.println("Which bank account would you like to transfer to?");
         for (BankAccount a : customer.getAccounts()) {
-            System.out.print("Account: " + a.getAccountId() + "   ");
+            if (a.getStatus()) {
+                System.out.print("Account: " + a.getAccountId() + "   ");
+            }
         } 
         System.out.println();
         int selection = -1;
         
         while (selection < 0 || selection >= customer.getAccounts().size()) {
-            System.out.print("Enter account ID for account you want to transfer money to: ");
             selection = keyboardInput.nextInt();
+            while (!customer.getAccounts().get(selection).getStatus()) {
+                System.out.print("Enter account ID for account you want to transfer money to: ");
+                selection = keyboardInput.nextInt();
+            }
         } 
         BankAccount receiver = customer.getAccounts().get(selection);
 
@@ -213,9 +230,20 @@ public class MainMenu {
 
             if (result) {
 
-                System.out.println(
+                System.out.print(
                     "Your account has been successfully closed!"
                 );
+
+                int size = customer.getAccounts().size() - 1;
+                while (size >= 0) {
+                    BankAccount account = customer.getAccounts().get(size);
+                    if (account.getStatus()) {
+                        currentAccount = account;
+                        break;
+                    }
+                    size--;
+                }
+                System.out.println(" You are now in account " + currentAccount.getAccountId());
 
             } else {
 
@@ -228,8 +256,70 @@ public class MainMenu {
         }
     }
 
+    public void showAccountHistory() {
+        System.out.println("Accounts");
+        System.out.println("--------------------------------");
 
+        for (BankAccount b : customer.getAccounts()) {
+            System.out.print("Account ID: " + b.getAccountId());
+            if (b.getAccountId() == currentAccount.getAccountId()) {
+                System.out.print("   [CURRENT ACCOUNT]");
+            } 
+            System.out.println();
+            System.out.println("Balance: " + b.getBalance());
+            boolean status = b.getStatus();
+            if (status) {
+                System.out.println("Status: Active");
+            } else {
+                System.out.println("Status: Closed");
+            }
+            System.out.println();
+        }
+    }
 
+    public void showCompleteTransactionHistory() {
+        System.out.println("Complete Transaction History");
+        System.out.println("--------------------------------");
+
+        List<Transaction> allTransactions = new ArrayList<>();
+
+        for (BankAccount account : customer.getAccounts()) {
+            allTransactions.addAll(account.getTransactionHistory());
+            
+        }
+
+        //sort transactions by date, regardless of account 
+        allTransactions.sort((t1, t2) -> t2.getDate().compareTo(t1.getDate()));
+
+        if (allTransactions.size() == 0) {
+        System.out.println("No transaction history");
+        }
+
+        for (Transaction t : allTransactions) {
+        String symbol = "";
+        if (t.getType().equals("Deposit")) {
+            symbol = "+$";
+        } else if (t.getType().equals("Withdrawal")) {
+            symbol = "-$";
+        }
+        System.out.println(t.getDate() + " | ID: " + t.getID() + " | " + t.getType() + " | " + symbol + t.getAmount());
+        }
+    } 
+
+    public void showCompleteBankingHistory() {
+        System.out.println("================================");
+        System.out.println("BANKING HISTORY");
+        System.out.println("================================");
+
+        System.out.println();
+        showAccountHistory();
+
+        System.out.println();
+        showCompleteTransactionHistory();
+
+        System.out.println("================================");
+        
+    }
 
     public void performWithdraw() {
     double withdrawAmount = -1;
