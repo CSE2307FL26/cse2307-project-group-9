@@ -24,7 +24,7 @@ Imaan- 8
 Anna - A bank customer should be able to view their entire bank history and information  
 Anna - A bank customer should be able to search their transaction history by transaction type.  
 Micaiah - A bank customer should be able to login into their account  
-Micaiah - 10  
+Micaiah - 9  
 
 ## Is there anything that you implemented but doesn't currently work?
 
